@@ -18,6 +18,9 @@ st.set_page_config(
 st.title("🧮 수학 계산기 & 🌍 세계인구 분석 웹앱")
 st.write("사칙연산, 모듈러, 지수, 로그, 다항함수 그래프, 연도별 세계인구 분석 기능을 제공합니다.")
 
+# 분석에 사용할 연도 컬럼들
+YEAR_COLUMNS = ["1970", "1980", "1990", "2000", "2010", "2015", "2020", "2022"]
+
 # ─────────────────────────────────────────────
 # 사이드바 메뉴
 # ─────────────────────────────────────────────
@@ -47,7 +50,14 @@ def load_population_data():
       - World Population Percentage
     """
     df = pd.read_csv("world_population.csv")
-    df.columns = [c.strip() for c in df.columns]  # 혹시 모를 공백 제거
+    # 컬럼 이름 양쪽 공백 제거
+    df.columns = [c.strip() for c in df.columns]
+
+    # 연도 및 비율 컬럼 숫자형으로 변환
+    for col in YEAR_COLUMNS + ["World Population Percentage"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
     return df
 
 
@@ -201,44 +211,56 @@ elif menu == "연도별 세계인구 분석":
         st.error("world_population.csv 파일을 찾을 수 없습니다. main.py와 같은 폴더에 두고 다시 실행해 주세요.")
         st.stop()
 
-    # 연도 목록 (CSV 컬럼 이름에 맞춰 사용)
-    year_columns = ["1970", "1980", "1990", "2000", "2010", "2015", "2020", "2022"]
-
+    # 1) 연도별 인구 지도
     st.markdown("#### 1) 연도별 세계 인구 지도")
 
     year = st.selectbox(
         "연도를 선택하세요",
-        options=year_columns,
-        format_func=lambda y: f"{y}년"
+        options=YEAR_COLUMNS,
+        format_func=lambda y: f"{y}년",
     )
 
-    # 선택한 연도의 인구 지도
     if st.button("선택 연도 인구 지도 보기", key="year_map"):
-        fig_year = px.choropleth(
-            df_pop,
-            locations="code",          # ISO3 국가 코드
-            color=year,
-            hover_name="Country",
-            color_continuous_scale="Viridis",
-            labels={year: f"Population {year}"},
-        )
-        fig_year.update_layout(
-            title=f"{year}년 세계 인구 분포",
-        )
-        st.plotly_chart(fig_year, use_container_width=True)
+        if year not in df_pop.columns:
+            st.error(f"{year} 컬럼을 찾을 수 없습니다. CSV 헤더를 확인해 주세요.")
+        else:
+            # 필요한 컬럼만 뽑아서 새 DataFrame 생성
+            df_year = df_pop[["code", "Country", year]].copy()
+            df_year = df_year.rename(columns={year: "Population"})
+
+            # 혹시 모를 타입 문제 방지
+            df_year["Population"] = pd.to_numeric(df_year["Population"], errors="coerce")
+
+            fig_year = px.choropleth(
+                df_year,
+                locations="code",
+                locationmode="ISO-3",
+                color="Population",
+                hover_name="Country",
+                color_continuous_scale="Viridis",
+                labels={"Population": f"Population {year}"},
+            )
+            fig_year.update_layout(
+                title=f"{year}년 세계 인구 분포",
+            )
+            st.plotly_chart(fig_year, use_container_width=True)
 
     st.markdown("---")
     st.markdown("#### 2) 세계 인구 비율(%) 지도")
-
-    st.write("각 나라가 전 세계 인구에서 차지하는 **비율(%)**을 색으로 표시합니다.")
 
     if "World Population Percentage" not in df_pop.columns:
         st.error("'World Population Percentage' 열이 CSV에 존재하지 않습니다.")
     else:
         if st.button("세계 인구 비율 지도 보기", key="share_map"):
+            df_share = df_pop[["code", "Country", "World Population Percentage"]].copy()
+            df_share["World Population Percentage"] = pd.to_numeric(
+                df_share["World Population Percentage"], errors="coerce"
+            )
+
             fig_share = px.choropleth(
-                df_pop,
+                df_share,
                 locations="code",
+                locationmode="ISO-3",
                 color="World Population Percentage",
                 hover_name="Country",
                 color_continuous_scale="Plasma",
