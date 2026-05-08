@@ -20,20 +20,20 @@ st.markdown(
     """
     <style>
         :root {
-            --bg-top: #f7f3ee;
-            --bg-mid: #eef4fb;
-            --bg-bottom: #e7efe8;
-            --card-bg: rgba(255, 255, 255, 0.74);
-            --text-main: #1d2532;
-            --text-sub: #536071;
+            --bg-top: #f4efe8;
+            --bg-mid: #e7eef7;
+            --bg-bottom: #dde7df;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #17202c;
+            --text-sub: #3f4c5d;
             --accent: #1f7a8c;
             --accent-dark: #115161;
         }
 
         [data-testid="stAppViewContainer"] {
             background:
-                radial-gradient(circle at 8% 18%, rgba(31, 122, 140, 0.20) 0, rgba(31, 122, 140, 0) 42%),
-                radial-gradient(circle at 92% 10%, rgba(177, 200, 223, 0.55) 0, rgba(177, 200, 223, 0) 40%),
+                radial-gradient(circle at 8% 18%, rgba(31, 122, 140, 0.12) 0, rgba(31, 122, 140, 0) 36%),
+                radial-gradient(circle at 92% 10%, rgba(177, 200, 223, 0.28) 0, rgba(177, 200, 223, 0) 32%),
                 linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bottom) 100%);
         }
 
@@ -42,19 +42,28 @@ st.markdown(
             padding-bottom: 2rem;
         }
 
-        h1, h2, h3 {
+        h1, h2, h3,
+        p,
+        label,
+        span,
+        div,
+        .stMarkdown,
+        .stCaption {
             color: var(--text-main);
+        }
+
+        h1, h2, h3 {
             letter-spacing: 0.02em;
         }
 
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #fefbf8 0%, #f2f7fc 100%);
+            background: linear-gradient(180deg, #fffdfa 0%, #eef4fb 100%);
             border-right: 1px solid rgba(17, 81, 97, 0.10);
         }
 
         .hero-card {
             background: var(--card-bg);
-            border: 1px solid rgba(17, 81, 97, 0.15);
+            border: 1px solid rgba(17, 81, 97, 0.18);
             border-radius: 16px;
             padding: 0.9rem 1rem;
             margin-bottom: 1.1rem;
@@ -93,16 +102,16 @@ st.markdown(
 
         div[data-testid="stButton"] > button {
             border-radius: 12px;
-            border: 1px solid rgba(17, 81, 97, 0.16);
-            background: linear-gradient(180deg, #ffffff 0%, #ecf4fc 100%);
+            border: 1px solid rgba(17, 81, 97, 0.22);
+            background: linear-gradient(180deg, #ffffff 0%, #f2f7fd 100%);
             color: var(--text-main);
-            font-weight: 600;
+            font-weight: 700;
             transition: all 120ms ease;
             min-height: 2.65rem;
         }
 
         div[data-testid="stButton"] > button:hover {
-            border-color: rgba(17, 81, 97, 0.48);
+            border-color: rgba(17, 81, 97, 0.52);
             box-shadow: 0 8px 14px rgba(17, 81, 97, 0.14);
             transform: translateY(-1px);
         }
