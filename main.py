@@ -20,9 +20,9 @@ st.markdown(
     """
     <style>
         :root {
-            --bg-top: #f4efe8;
-            --bg-mid: #e7eef7;
-            --bg-bottom: #dde7df;
+            --bg-top: #f7f9fc;
+            --bg-mid: #f2f5fa;
+            --bg-bottom: #edf1f7;
             --card-bg: rgba(255, 255, 255, 0.92);
             --text-main: #17202c;
             --text-sub: #3f4c5d;
@@ -31,10 +31,7 @@ st.markdown(
         }
 
         [data-testid="stAppViewContainer"] {
-            background:
-                radial-gradient(circle at 8% 18%, rgba(31, 122, 140, 0.12) 0, rgba(31, 122, 140, 0) 36%),
-                radial-gradient(circle at 92% 10%, rgba(177, 200, 223, 0.28) 0, rgba(177, 200, 223, 0) 32%),
-                linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bottom) 100%);
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 48%, var(--bg-bottom) 100%);
         }
 
         .block-container {
@@ -57,17 +54,17 @@ st.markdown(
         }
 
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #fffdfa 0%, #eef4fb 100%);
+            background: linear-gradient(180deg, #fbfcfe 0%, #f3f6fb 100%);
             border-right: 1px solid rgba(17, 81, 97, 0.10);
         }
 
         .hero-card {
             background: var(--card-bg);
-            border: 1px solid rgba(17, 81, 97, 0.18);
+            border: 1px solid rgba(17, 81, 97, 0.14);
             border-radius: 16px;
             padding: 0.9rem 1rem;
             margin-bottom: 1.1rem;
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px rgba(17, 33, 52, 0.06);
             color: var(--text-sub);
         }
 
