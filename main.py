@@ -20,23 +20,48 @@ st.markdown(
     """
     <style>
         :root {
-            --bg-top: #f7f9fc;
-            --bg-mid: #f2f5fa;
-            --bg-bottom: #edf1f7;
-            --card-bg: rgba(255, 255, 255, 0.92);
+            --bg-1: #0b1020;
+            --bg-2: #111a33;
+            --bg-3: #1b2445;
+            --bg-4: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.90);
             --text-main: #17202c;
             --text-sub: #3f4c5d;
-            --accent: #1f7a8c;
-            --accent-dark: #115161;
+            --accent: #4f46e5;
+            --accent-dark: #312e81;
         }
 
         [data-testid="stAppViewContainer"] {
-            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 48%, var(--bg-bottom) 100%);
+            background:
+                radial-gradient(1200px 500px at 15% -10%, rgba(99, 102, 241, 0.28), transparent 60%),
+                radial-gradient(900px 450px at 90% 0%, rgba(56, 189, 248, 0.20), transparent 58%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 35%, var(--bg-3) 70%, var(--bg-4) 100%);
+            min-height: 100vh;
+        }
+
+        [data-testid="stAppViewContainer"]::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.16;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: radial-gradient(circle at 50% 15%, black 20%, transparent 78%);
+            -webkit-mask-image: radial-gradient(circle at 50% 15%, black 20%, transparent 78%);
         }
 
         .block-container {
             padding-top: 2rem;
             padding-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 20px 50px rgba(2, 8, 23, 0.35);
         }
 
         h1, h2, h3,
@@ -46,7 +71,7 @@ st.markdown(
         div,
         .stMarkdown,
         .stCaption {
-            color: var(--text-main);
+            color: #eef3ff;
         }
 
         h1, h2, h3 {
@@ -54,8 +79,8 @@ st.markdown(
         }
 
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #fbfcfe 0%, #f3f6fb 100%);
-            border-right: 1px solid rgba(17, 81, 97, 0.10);
+            background: linear-gradient(180deg, rgba(248, 250, 255, 0.95) 0%, rgba(239, 245, 255, 0.94) 100%);
+            border-right: 1px solid rgba(79, 70, 229, 0.18);
         }
 
         /* ─────────────────────────────────────────────
@@ -69,7 +94,7 @@ st.markdown(
         [data-testid="stSidebar"] div[data-baseweb="select"] > div {
             background-color: #ffffff !important;
             color: #17202c !important;
-            border: 1px solid rgba(17, 81, 97, 0.35) !important;
+            border: 1px solid rgba(79, 70, 229, 0.35) !important;
             border-radius: 10px !important;
         }
 
@@ -85,7 +110,7 @@ st.markdown(
         div[data-baseweb="popover"] {
             background-color: #ffffff !important;
             color: #17202c !important;
-            border: 1px solid rgba(17, 81, 97, 0.25) !important;
+            border: 1px solid rgba(79, 70, 229, 0.25) !important;
             border-radius: 10px !important;
         }
 
@@ -99,18 +124,22 @@ st.markdown(
         }
 
         div[data-baseweb="popover"] li:hover {
-            background-color: #e9f3f7 !important;
-            color: #115161 !important;
+            background-color: #eef2ff !important;
+            color: #312e81 !important;
         }
 
         .hero-card {
             background: var(--card-bg);
-            border: 1px solid rgba(17, 81, 97, 0.14);
+            border: 1px solid rgba(79, 70, 229, 0.18);
             border-radius: 16px;
             padding: 0.9rem 1rem;
             margin-bottom: 1.1rem;
-            box-shadow: 0 8px 20px rgba(17, 33, 52, 0.06);
-            color: var(--text-sub);
+            box-shadow: 0 10px 26px rgba(2, 8, 23, 0.14);
+            color: var(--text-sub) !important;
+        }
+
+        .hero-card * {
+            color: var(--text-sub) !important;
         }
 
         .calc-display {
@@ -144,17 +173,17 @@ st.markdown(
 
         div[data-testid="stButton"] > button {
             border-radius: 12px;
-            border: 1px solid rgba(17, 81, 97, 0.22);
-            background: linear-gradient(180deg, #ffffff 0%, #f2f7fd 100%);
-            color: var(--text-main);
+            border: 1px solid rgba(79, 70, 229, 0.30);
+            background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+            color: #1f2937;
             font-weight: 700;
             transition: all 120ms ease;
             min-height: 2.65rem;
         }
 
         div[data-testid="stButton"] > button:hover {
-            border-color: rgba(17, 81, 97, 0.52);
-            box-shadow: 0 8px 14px rgba(17, 81, 97, 0.14);
+            border-color: rgba(79, 70, 229, 0.62);
+            box-shadow: 0 8px 14px rgba(79, 70, 229, 0.24);
             transform: translateY(-1px);
         }
 
@@ -163,12 +192,12 @@ st.markdown(
         }
 
         .function-help {
-            background: rgba(31, 122, 140, 0.08);
-            border: 1px solid rgba(31, 122, 140, 0.18);
+            background: rgba(238, 242, 255, 0.90);
+            border: 1px solid rgba(79, 70, 229, 0.22);
             border-radius: 12px;
             padding: 0.8rem 0.9rem;
             margin-bottom: 1rem;
-            color: #17202c;
+            color: #1f2937 !important;
             font-size: 0.95rem;
         }
     </style>
